@@ -1,0 +1,4 @@
+- [ ] Tạo endpoint nhận yêu cầu export → đẩy job vào Pub/Sub
+- [ ] Worker query đơn theo `shopId`, dùng bulk API cho 500+ đơn
+- [ ] Sinh file `.xlsx`, upload GCS, trả link tải
+- [ ] Thông báo cho user khi xong

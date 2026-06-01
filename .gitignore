@@ -4,4 +4,9 @@ out
 .DS_Store
 *.log
 .vercel
+.env
 .env*.local
+
+# IDE
+.idea
+.vscode
