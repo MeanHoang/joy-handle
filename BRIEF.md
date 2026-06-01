@@ -35,4 +35,21 @@ Tập chung tính cá nhân lên nhé
 ## 💭 Ghi chú linh tinh
 Cái này chỉ là ý tưởng tôi mong nhận đc đánh giá và phân tích của bn bổ sung nhé à với đổi tên gì đó nghe cute đi chứ joy pm láo quá 
 
+Tôi muốn note lại 1 chút trong quá trình xử dụng nhé 
+1. Ở mỗi nơi làm cần rõ là cần làm rõ công việc hơn nữa và trừ step 1 ra các step còn lại chỉ đc move khi tôi đồng ý thôi nhé 
+FEATURE
+   gather: (Bạn AI thực hiện hoàn toàn) Bạn làm hoàn toàn thực hiện tổng hợp cả phân tích xem có gì không đúng so sánh sơ với code base joy đặt câu hỏi lại cho tôi tao hỏi PO kéo sang verify luôn
+   verify: (Bạn tôi cùng thảo luận lại hết để nọi yêu cầu clean nhất )Tôi đưa câu trả lời cho bn bn phân tích tính khả thi khi thực hiện liên tục hỏi lại tôi đến khi tôi tháy okie rồi move qua tạo planh rõ rang 
+   plan: (Bạn thực hiện tôi review) cái này verify thì đưa ra kế hoạnh tổng quát và càng chi tiết càng tốt tạo lươn md ở folder respo joy luôn nhé VÀ ĐẶC BIỆT CHIA RA CÁC PHASE THỰC HIỆN tôi review rồi tự bảo move nếu đc cái này tôi vẫn có thể hỏi lại nhé
+   coding: (Bạn code theo plan từng phase tôi review ) cái này cứ làm từng phase rồi commit rồi làm cái mới cái này càng chi tiết càng tốt thực ra cái này sẽ bao gồm các bước nhỏ bn code, tôi và bạn cùng review, tôi test
+   deploy staging: checkout brand và commit deploy lên staging 
+   testing staging: lên cái này đẩy lên staging cho tester test rồi nhưungx sẽ có lỗi cần sửa cũng giống như 1 cái coding bản nhỏ đi bn tự setup nhé
+   review: cái này để Techlead review thì tạo 1 file review md và commit để nó deploy tôi tự paste doc để review đọc nhé 
+   deploy: đã lên production ( Cái này cần bn sửa nếu có bug cần monitor nếu là tag nhưu sync export nặng)
 
+BUG workflow
+localize: bạn xác định hoàn toàn và tự move và đưa ra cách tại hiện nhé or check ở đâu nhé
+reproduce: Cái này tôi làm hoàn toàn tôi tự tái hiện và tự kêu bn move lên nhé 
+Xác định: bn xác định và đặc biệt mô tả xác định lỗi và đề xuất sửa nhé 
+Sửa lỗi: Thực heienj tren repo nào checkout brand mới và sửa tôi review lại move nếu tôi đồng ý 
+Deploy: cái này là tôi test trên production xem okie chưa 

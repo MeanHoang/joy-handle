@@ -6,37 +6,40 @@ allowed-tools: Read, Glob, Grep, Edit, Bash
 
 Task to work on: $ARGUMENTS
 
-> **joy-handle is only an intermediate notebook.** The real work — plan, code, fix, test, review — happens IN the target repo (`../joy` / `../joy-2` / `../joy-3`) using THAT repo's own commands/agents, NOT here. This hub can't produce the full result; it only reads the card for context and writes a short summary back. Notes here are deliberately lighter than the repo's output.
+> **joy-handle is only an intermediate notebook.** The real work — plan, code, fix, test, review — happens IN the target repo (`../joy` / `../joy-2` / `../joy-3`) using THAT repo's own commands/agents, NOT here. The hub only reads the card for context and records a short summary. Notes here are deliberately lighter than the repo's output.
 
-## How to run a task
+## Two hard rules
 
-1. Open `tasks/<task>/` — read `_meta.md` + content files (feature: `ba.md`/`plan.md`/`dev.md`/`review.md`; bug: `fix.md`). Unclear which task? run `/board` then ask me.
-2. `/add-dir ../<repo>` for the card's `repo:` if not added. **From here, work inside that repo.**
-3. Walk the steps below **for the card's `type`**. Each step = one kanban column (`status`). When a step is done: do the work in the repo → write the short summary into the card → **bump `status` to the next column** + `updated` = today. Never jump columns silently.
-4. Golden rules every step: small loops (NEVER 50 files in one commit) · link the MR/branch, don't hand-type code · check Joy's 5 expensive-mistake spots (`shopId` scoping · webhook ≤5s → Pub/Sub · Firestore index for compound queries · `/translate` every new user-facing string · bulk API for 500+ items).
+1. **Status moves need MY approval.** Only **step 1** (`gather` for feature, `localize` for bug) may auto-advance. For **every other column**, do the work but **do NOT bump `status` until I explicitly say OK** — wait, even if the work looks done.
+2. **Clarify before acting.** At each step make the work *more* concrete than the source — ask me back rather than assume. Each step = one kanban column; finishing a step means: do the work in the repo → write the short summary into the card → (with my OK) bump `status` to the next column + `updated` = today.
 
-### FEATURE workflow
+Golden checks every step: small loops (NEVER 50 files in one commit) · link the MR/branch, don't hand-type code · Joy's 5 expensive-mistake spots (`shopId` scoping · webhook ≤5s → Pub/Sub · Firestore index for compound queries · `/translate` every new user-facing string · bulk API for 500+ items).
 
-| `status` | Where | Do (real work) | Record into card |
-| --- | --- | --- | --- |
-| **gather** | hub + sources | Gather & summarize the ask (sources via `.env`: Notion=ticket · Slack=thread · GCP Cloud Logging=error logs `avada-joy` · Crisp=support chat). State problem + goal. | `ba.md` (problem/goal) · sources in `_meta.md` |
-| **verify** | repo | Grep/read the real code to check the source is actually true. Flag every source-vs-code conflict. | conflict table in `review.md` |
-| **plan** | repo | Call **`/plan`** in the repo → split into small parts. | plan + checklist in `plan.md` |
-| **coding** | repo | Build part by part, loop. `/translate` new strings, `/impact` if risky. | tick parts in `dev.md` · set `branch` |
-| **review** | repo | Call **`/review`** + **`/lint-mr`**. | verdict + tradeoffs in `review.md` · set `mr` |
-| **deploy** | repo | Deploy to staging. | `env: staging` |
-| **done** | repo | Test passes. Any new bug found → spin a **separate bug card**. | `status: done` |
+## Setup
+Open `tasks/<task>/`, read `_meta.md` + content files. `/add-dir ../<repo>` for the card's `repo:`. Unclear which task? run `/board` then ask me.
 
-### BUG workflow
+## FEATURE workflow
 
-| `status` | Where | Do (real work) | Record into card |
-| --- | --- | --- | --- |
-| **localize** | repo | Narrow the failure from logs/Sentry/Crisp (GCP Cloud Logging via `.env`). Note symptom + which `env`. | symptom + env in `fix.md` |
-| **reproduce** | repo | Reproduce the bug (note steps). | repro steps in `fix.md` |
-| **identify** | repo | Find the root cause (read code + logs). | cause in `fix.md` |
-| **fix** | repo | Call **`/fix`** → smallest safe fix. | solution in `fix.md` · set `branch` |
-| **review** | repo | Call **`/review`** + **`/lint-mr`**. | set `mr` |
-| **deploy** | repo | Deploy the fix. | update `env` |
-| **done** | repo | Retest passes. | `status: done` |
+| `status` | Owner | Move | What to actually do | Record into card |
+| --- | --- | --- | --- | --- |
+| **gather** | 🤖 AI | **auto** | Fully gather + analyze the ask (sources via `.env`: Notion/Slack/GCP logs/Crisp). Compare roughly vs joy codebase, list questions for me to ask PO. | `ba.md` + sources in `_meta.md` |
+| **verify** | 🤝 both | my OK | I answer your questions → you analyze feasibility, keep asking back until the requirement is clean and I'm satisfied. | conflicts/decisions in `review.md` |
+| **plan** | 🤖 AI, I review | my OK | Write a detailed plan **as an `.md` file inside the joy repo**, **split into PHASES**. I review (can still ask back). | summary + repo plan link in `plan.md` |
+| **coding** | 🤝 AI codes, I review+test | my OK | Do it **phase by phase**: code one phase → commit → I review → I test → next phase. | tick phases in `dev.md` · set `branch` |
+| **staging** (Deploy staging) | 🤖 AI | my OK | Checkout branch, commit, deploy to staging. | `env: staging` |
+| **test-staging** | 🧑 tester, 🤖 AI fixes | my OK | Tester tests on staging; each bug = a small coding loop you set up & fix. | note fixes in `dev.md` |
+| **review** | 🧑 Techlead | my OK | Create `review.md` + commit it (so it deploys); I paste the doc for the Techlead to read. | finalize `review.md` · set `mr` |
+| **production** | 🤖 AI | my OK | It's on production — monitor and fix bugs (especially heavy tags: sync/export). | note prod issues in `dev.md` |
+| **done** | — | my OK | Stable on prod, monitoring over. | `status: done` |
 
-Keep card updates cheap and accurate after every step — this is the anti-drift rule.
+## BUG workflow
+
+| `status` | Owner | Move | What to actually do | Record into card |
+| --- | --- | --- | --- | --- |
+| **localize** | 🤖 AI | **auto** | Fully localize the failure (logs/Sentry/Crisp, GCP Cloud Logging). Give the repro method / where to check. | symptom + env in `fix.md` |
+| **reproduce** | 🧑 me | my OK | I reproduce it myself, then tell you to move. | repro steps in `fix.md` |
+| **identify** | 🤖 AI | my OK | Identify the root cause; **describe the bug clearly + propose the fix**. | cause + proposed fix in `fix.md` |
+| **fix** | 🤖 AI, I review | my OK | On the repo: checkout a new branch, make the smallest fix; I review → move if I agree. | solution in `fix.md` · set `branch`/`mr` |
+| **production** | 🧑 me | my OK | I test on production to confirm it's OK. | `status: production` when I confirm |
+
+Keep card updates cheap and accurate — but never advance `status` past step 1 without my go-ahead.

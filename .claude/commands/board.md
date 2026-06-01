@@ -8,8 +8,8 @@ Read every task folder in `tasks/` (skip `_template/`); each card's frontmatter 
 For each card, read the frontmatter: `title, type, status, env, repo, branch, mr, updated`.
 
 Print a **compact kanban**, split by `type`, grouped by `status` in column order:
-- **feature**: `gather → verify → plan → coding → review → deploy → done`
-- **bug**: `localize → reproduce → identify → fix → review → deploy → done`
+- **feature**: `gather → verify → plan → coding → staging → test-staging → review → production → done`
+- **bug**: `localize → reproduce → identify → fix → production`
 
 One line per card:
 `- [<type>] <title> · 📦<repo> · 🌐<env> · <mr or branch or "—"> · <updated>`

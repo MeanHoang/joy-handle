@@ -49,11 +49,12 @@ no DB, no editing-on-web. Don't grow it beyond a viewer without asking.
 ## How the board works
 
 - 1 task = 1 folder `tasks/<slug>/`. Content files differ by type — feature: `ba.md`+`plan.md`+`dev.md`+`review.md`; bug: just `fix.md`. The "kanban column" = the `status` field, split by `type`:
-  feature `gather→verify→plan→coding→review→deploy→done`, bug `localize→reproduce→identify→fix→review→deploy→done`. `env` (local/staging/production) is tracked separately.
+  feature `gather→verify→plan→coding→staging→test-staging→review→production→done`, bug `localize→reproduce→identify→fix→production`. `env` (local/staging/production) is tracked separately.
+- **Status moves need my approval.** Only step 1 (`gather`/`localize`) auto-advances; every other column move waits for my explicit OK. Each step also clarifies the work *more* — ask back, don't assume. Per-step owner + playbook: `.claude/commands/task-work.md`.
 - **STATE must stay accurate and cheap to update** — this is the anti-drift rule, the root disease of the old md. Update `status/env/branch/mr/updated` after every meaningful step.
 - **"What dev did" = link the MR/branch, do NOT hand-type it.** Git is the source of truth.
 - Per card lenses → web board tabs, **per type**: feature = Phân tích (`ba.md`) / Plan (`plan.md`) / Theo dõi tiến độ (`dev.md`) / Review (`review.md`); bug = just Nguyên nhân & giải pháp (`fix.md`). Tab config lives in `lib/columns.js` (`TABS`).
-- 2 flows: **feature** (verify→plan→loop small parts→review→deploy staging→fix bug) · **bug** (localize→reproduce→identify→fix→review→deploy→retest).
+- 2 flows: **feature** (gather→verify→plan→code by phase→staging→test-staging→review→production→done) · **bug** (localize→reproduce→identify→fix→production). Each step has an owner (🤖 AI / 🧑 me / 🤝 both) — see the playbook.
 - Commands: `/board` · `/task-new` · `/task-work`.
 
 ## Multi-repo (Hub-orchestrates)

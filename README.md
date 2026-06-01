@@ -18,8 +18,8 @@ only a viewer.
 ## Columns (dev flow, split by type)
 
 ```
-feature: gather → verify → plan → coding → review → deploy → done
-bug:     localize → reproduce → identify → fix → review → deploy → done
+feature: gather → verify → plan → coding → staging → test-staging → review → production → done
+bug:     localize → reproduce → identify → fix → production
 ```
 `env` is separate: `local | staging | production` (a task can be "review done" yet have a "prod bug").
 

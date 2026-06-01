@@ -2,7 +2,7 @@
 title: Widget Loyalty — dịch condition text của Place Order rule
 type: bug
 # bug kanban columns:
-#   localize | reproduce | identify | fix | review | deploy | done
+#   localize | reproduce | identify | fix | production
 status: identify
 env: production      # local | staging | production (where the bug shows)
 repo: joy            # joy | joy-2 | joy-3
