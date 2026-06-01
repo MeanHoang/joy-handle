@@ -7,10 +7,10 @@ allowed-tools: Read, Glob, Grep, Write
 Source / description from me:
 $ARGUMENTS
 
-Goal: turn raw input (often messy, PO/BA-generated, unreliable) into **one clean task card**.
+Goal: turn raw input (often messy, PO/BA-generated, unreliable) into **one clean task card** — an *intermediate note*, not the full spec. The detailed work later lives in the target repo, not here.
 
 1. **Summarize** the problem + goal in my own words — don't copy the source verbatim.
-2. **Verify quickly against real code** if needed: grep the relevant repo to check whether the source is actually true. FLAG conflicts into the "Reviewer lens".
+2. **Verify quickly against real code** if needed: `/add-dir ../<repo>` and grep the **target repo** (`joy`/`joy-2`/`joy-3`) to check whether the source is actually true. FLAG conflicts into the "Reviewer lens".
 3. **ASK BACK** on anything unclear before writing — don't guess. List the questions and wait for my answers.
 4. Once clear, copy the template folder for the type → `tasks/<task-name>/` (lowercase, no diacritics, `-` separated) and fill its files:
    - **feature**: copy `tasks/_template-feature/`. Fill `_meta.md` (frontmatter: `status: gather`, `repo`, `env`, `updated` = today; sources under 📎) + `ba.md` (BA lens) + `plan.md` (plan, split small) + `dev.md` (Dev progress) + `review.md` (Reviewer lens + conflict table).

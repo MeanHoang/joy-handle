@@ -4,8 +4,13 @@ out
 .DS_Store
 *.log
 .vercel
-.env
-.env*.local
+
+# secrets / credentials — NEVER commit
+.env*
+!.env.example
+serviceAccount*.json
+*service_account*.json
+*-credentials.json
 
 # IDE
 .idea

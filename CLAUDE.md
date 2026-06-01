@@ -2,6 +2,8 @@
 
 joy-handle = a **personal work command board** (markdown + Claude commands; plus a read-only web viewer, see rule 5).
 It answers fast: *"where is this task (which env), how far along, and why did I do it this way?"* when jumping between joy / joy-2 / joy-3.
+
+**It is an INTERMEDIATE NOTEBOOK only.** The real work — plan / code / fix / test / review — runs IN the target repo (`../joy` etc.) using THAT repo's own commands & agents, never here. When I ask you to do something, switch into the matching repo and call its command; this hub only records a short summary + links afterward. Notes here are deliberately lighter than the repo's output.
 Full rules: `README.md`. Card templates (per type): `tasks/_template-feature/` (`_meta.md` + `ba.md` + `plan.md` + `dev.md` + `review.md`) and `tasks/_template-bug/` (`_meta.md` + `fix.md` only — bug stays lean).
 
 ---
@@ -57,5 +59,5 @@ no DB, no editing-on-web. Don't grow it beyond a viewer without asking.
 ## Multi-repo (Hub-orchestrates)
 
 - Real code lives in `../joy`, `../joy-2` (pre-added in `settings.local.json`; add `../joy-3` once cloned). Each card's `repo:` says which clone it touches.
-- Reuse Joy's already-tuned commands/agents: `/plan` `/fix` `/test` `/review` `/lint-mr` `/translate` `/impact` `/browser-test`.
+- **Execute in the repo, not in the hub.** For any real task, `/add-dir ../<repo>` and run that repo's already-tuned commands/agents there: `/plan` `/fix` `/test` `/review` `/lint-mr` `/translate` `/impact` `/browser-test`. The hub only gets the summary back.
 - **Joy's 5 expensive-mistake spots** (check while working): `shopId` scoping (multi-tenant) · webhook responds in ≤5s (heavy work → Pub/Sub) · Firestore index for compound queries · `/translate` for every new user-facing string · bulk 500+ items use the bulk API.
