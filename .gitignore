@@ -12,6 +12,9 @@ serviceAccount*.json
 *service_account*.json
 *-credentials.json
 
+# personal / local-only notes
+BRIEF.md
+
 # IDE
 .idea
 .vscode
