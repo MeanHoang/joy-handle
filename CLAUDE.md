@@ -60,4 +60,5 @@ no DB, no editing-on-web. Don't grow it beyond a viewer without asking.
 
 - Real code lives in `../joy`, `../joy-2` (pre-added in `settings.local.json`; add `../joy-3` once cloned). Each card's `repo:` says which clone it touches.
 - **Execute in the repo, not in the hub.** For any real task, `/add-dir ../<repo>` and run that repo's already-tuned commands/agents there: `/plan` `/fix` `/test` `/review` `/lint-mr` `/translate` `/impact` `/browser-test`. The hub only gets the summary back.
+- **Gathering sources** (the `gather`/`localize` step, creds in `.env`, gitignored): Notion=read tickets · Slack=read threads · GCP Cloud Logging=read error logs (project `avada-joy`) · Crisp=read support chats. These feed the *summary*, not code execution. Full per-step playbook: `.claude/commands/task-work.md`.
 - **Joy's 5 expensive-mistake spots** (check while working): `shopId` scoping (multi-tenant) · webhook responds in ≤5s (heavy work → Pub/Sub) · Firestore index for compound queries · `/translate` for every new user-facing string · bulk 500+ items use the bulk API.
