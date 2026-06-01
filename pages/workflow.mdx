@@ -1,0 +1,29 @@
+# 🔄 Quy trình làm 1 feature
+
+Luồng chuẩn để AI + bạn cùng làm. Mỗi pha có **gate** — chỗ AI dừng chờ bạn duyệt.
+
+```
+B0 INPUT   gom Notion / ticket / đầu bạn (nhiều nguồn, có thể rác)
+            │
+B1 VERIFY  AI grep code Joy thật → đối chiếu → FLAG mâu thuẫn
+            │                                    └── GATE: bạn quyết mỗi mâu thuẫn
+B2 SPEC    kết tủa spec đã lọc (file features/<name>.mdx)
+            │                                    └── GATE: bạn duyệt ✅
+B3 PLAN    /plan-v2 từ spec → chia bước
+            │
+B4 CODE    bám spec, CẤM đọc lại nguồn rác; 1 layer / lần
+            │
+B5 REVIEW  /test · /review-v2 (đối chiếu spec) · /translate nếu có label
+            │
+B6 DONE    merge → cập nhật pha 🚀 ở đây
+```
+
+## Ranh giới (để không tái mắc bệnh nguồn rác)
+
+| Hub này (`joy-pm`) giữ | Repo Joy giữ |
+| ---------------------- | ------------ |
+| Spec đã lọc (BA đọc) | Code thật |
+| Đang ở pha nào | Sự thật "code xong gì" (git/MR) |
+| Mâu thuẫn + quyết định | — |
+
+**Tiến độ code** = đọc git/MR, KHÔNG ghi tay checklist B1/B2 vào đây.
